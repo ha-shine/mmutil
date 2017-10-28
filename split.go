@@ -1,6 +1,14 @@
 package mmutil
 
-import "unicode/utf8"
+import (
+	"regexp"
+	"unicode/utf8"
+)
+
+// Regular expression strnig to detect zawgyi
+const regString = `[ဳဴၚၠ-႟]|ေ[ႏ႐]|ေ[ျၾ-ႄ]|[^က-အဩျ်ြွ]ေ|[^က-အဩေ]ျ|\s[ေျၾ-ႄ]|^[ေျၾ-ႄ]|္[^က-ဪ]|င္|ြ[ျၾ-ႄ]|ြ[်႐]|ွြ|ုု`
+
+var reg = regexp.MustCompile(regString)
 
 func isSpace(n int) bool {
 	return n == 32
@@ -55,4 +63,15 @@ func SplitWords(s string) []string {
 		b = b[size:]
 	}
 	return xs
+}
+
+// IsZawgyi detects whether the given byte array is written in Zawgyi.
+// This is a low level implementation and you should be using StringIsZawgyi
+func IsZawgyi(b []byte) bool {
+	return reg.Find(b) != nil
+}
+
+// StringIsZawgyi detects whether the given string is written in Zawgyi
+func StringIsZawgyi(s string) bool {
+	return IsZawgyi([]byte(s))
 }
