@@ -44,7 +44,9 @@ func SplitWords(s string) []string {
 			// If the word is consonant (က, ခ, ဂ, etc) or a space, append cached string to the result,
 			// and replace the cache with current word
 			case isConsonant(int(r)):
-				xs = append(xs, cur)
+				if cur != "" {
+					xs = append(xs, cur)
+				}
 				cur = string(r)
 			// If the word is an asat ( ် ), append asat to cached string with last element of the result
 			// as an prefix and remove the last element from the result
@@ -66,6 +68,8 @@ func SplitWords(s string) []string {
 		}
 		b = b[size:]
 	}
-	xs = append(xs, cur)
+	if cur != "" {
+		xs = append(xs, cur)
+	}
 	return xs
 }
