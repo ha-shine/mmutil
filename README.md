@@ -27,3 +27,4 @@ result := SplitWords("ကိုကြီး") // ["ကို", "ကြီး"]
 
 # Todos
 - Conversion between zawgyi and unicode (Currently available converters use Regular expressions with back reference. Golang doesn't support back reference.)
+- Support kinzi, and english words in SplitWords function. (kinzi - "င်္")
