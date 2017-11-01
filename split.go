@@ -30,7 +30,8 @@ func isValidCode(n int) bool {
 	return (n >= 4096 && n <= 4255) || n == 32
 }
 
-// SplitWords break an input string written in myanmar unicode into individual words as an array
+// SplitWords break an input string written in myanmar unicode
+// into individual words as an array
 // TODO - kinzi words
 // TODO - handle english characters
 func SplitWords(s string) []string {
@@ -41,14 +42,16 @@ func SplitWords(s string) []string {
 		r, size := utf8.DecodeRune(b)
 		if isValidCode(int(r)) {
 			switch {
-			// If the word is consonant (က, ခ, ဂ, etc) or a space, append cached string to the result,
+			// If the word is consonant (က, ခ, ဂ, etc) or a space,
+			// append cached string to the result,
 			// and replace the cache with current word
 			case isConsonant(int(r)):
 				if cur != "" {
 					xs = append(xs, cur)
 				}
 				cur = string(r)
-			// If the word is an asat ( ် ), append asat to cached string with last element of the result
+			// If the word is an asat ( ် ), append asat to cached string
+			// with last element of the result
 			// as an prefix and remove the last element from the result
 			case isAsat(int(r)):
 				cur = xs[len(xs)-1] + cur + string(r)
